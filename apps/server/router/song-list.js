@@ -23,7 +23,6 @@ router.get("/getSongLists", async (ctx) => {
 });
 
 // 获取歌单详情
-// 获取歌单列表
 router.get("/getSongListDetail", async (ctx) => {
   console.log(1111, ctx.query);
   const params = {
