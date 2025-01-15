@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   headers: {
-    referer: "https://c.y.qq.com",
+    referer: "https://c.y.qq.com/",
     host: "c.y.qq.com",
   },
   baseURL: "https://c.y.qq.com",

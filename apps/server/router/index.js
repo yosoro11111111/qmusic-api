@@ -1,10 +1,13 @@
-import userRouter from './user.js'
 import rootRouter from './root.js'
+import songRouter from './song.js'
+import songListRouter from './song-list.js'
 import combineRouters from 'koa-combine-routers'
 
 const router = combineRouters(
   rootRouter,
-  userRouter
+  songRouter,
+  songListRouter,
+
 )
 
 export default router;
