@@ -39,6 +39,7 @@ jobs:
           REMOTE_USER: root
           TARGET: /home/apps-root/qmusic-api/
           SCRIPT_AFTER: |
+            echo pwd
             pnpm i
             pm2 stop qmusic-api
             pm2 start npm --name qmusic-api -- dev
