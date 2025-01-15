@@ -5,9 +5,10 @@ import path from "node:path";
 
 // https://vitepress.dev/reference/site-config
 const vitePressOptions = defineConfig({
-  title: "🎵QQ音乐",
+  title: "QQ音乐",
   description: "用心做音乐，用爱做产品",
   themeConfig: {
+    logo:'/logo.svg',
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '主页', link: '/' },

@@ -1,10 +1,10 @@
 # 歌单
 
-## 获取分类
+## 分类
 
 get接口：`getSongListCategories`
 
-### 返回
+**返回结果如下：**
 ```js
 {
     "code": 0,
@@ -225,13 +225,11 @@ get接口：`getSongListCategories`
 }
 ```
 
-## 歌单详情
+## 详情
 
-get 接口：`/getSongLists?`
+get 接口：`/getSongLists`
 
-### 参数
-
-参数：
+**参数如下：**
 
 ```js
 {
@@ -239,7 +237,7 @@ get 接口：`/getSongLists?`
 }
 ```
 
-### 返回
+**返回结果如下：**
 
 ```js
 {
