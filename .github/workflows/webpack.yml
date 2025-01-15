@@ -42,5 +42,5 @@ jobs:
             cd /home/apps-root/qmusic-api
             pnpm i
             pm2 list | grep -q "qmusic-api" && pm2 delete qmusic-api
-            pm2 start npm --name qmusic-api -- dev
+            pm2 start npm --name qmusic-api -- start
                 
