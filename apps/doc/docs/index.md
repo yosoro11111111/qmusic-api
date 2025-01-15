@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "My Awesome Project"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: "QQ音乐 API"
+  text: "使用文档手册"
+  tagline: 敢于承诺免费且永久维护，欢迎使用！
   actions:
     - theme: brand
       text: Markdown Examples
