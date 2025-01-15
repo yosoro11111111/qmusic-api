@@ -5,12 +5,16 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node ./bin/dev.js"
+    "dev": "node ./bin/dev.js",
+    "build": "node ./bin/build.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@inquirer/prompts": "^7.2.3"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0"
   }
 }
