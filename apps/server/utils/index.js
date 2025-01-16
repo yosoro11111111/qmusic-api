@@ -9,3 +9,5 @@ export const commonParams = {
   platform: "yqq.json",
   needNewCode: 0,
 };
+
+export const _guid = (Math.round(2147483647 * Math.random()) * new Date().getUTCMilliseconds()) % 1e10;

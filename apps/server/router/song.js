@@ -1,5 +1,6 @@
 import Router from "@koa/router";
 import uhttp from "../http-client/uhttp.js";
+import {_guid} from "../utils/index.js"
 
 const router = new Router();
 
@@ -39,7 +40,7 @@ router.get("/getSongInfo", async (ctx) => {
 
 // 获取歌曲链接
 router.get("/getMusicPlay", async (ctx) => {
-  const uin = global.userInfo.uin || "0";
+  const uin =  "0";
   const songmid = ctx.query.songmid + "";
   // response data only need play url value (all play)
   const justPlayUrl = (ctx.query.resType || "play") === "play";
