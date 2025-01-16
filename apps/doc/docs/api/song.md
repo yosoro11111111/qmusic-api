@@ -1,16 +1,19 @@
 # 歌曲
 
 ## 详情
+
 get 接口：`/getSongInfo`
 
 **参数如下：**
+
 ```js
 {
-    songmid: '000o3Ay7339Lf4'
+  songmid: "000o3Ay7339Lf4";
 }
 ```
 
 **返回结果如下：**
+
 ```js
 {
     "response": {
@@ -270,3 +273,32 @@ get 接口：`/getSongInfo`
     }
 }
 ```
+
+## 播放地址
+
+get 接口：`/getMusicPlay`
+
+**参数如下：**
+
+```js
+{
+  songmid: "000o3Ay7339Lf4"; //获取多个 以逗号分割
+}
+```
+
+**返回结果如下：**
+
+```js
+{
+    "playUrl": {
+        "000o3Ay7339Lf4": {
+            "url": "http://isure.stream.qqmusic.qq.com/M500000o3Ay7339Lf4.mp3?guid=1937240144&vkey=810B2879E8046A988E6C15C2E71C0C7F2407F23A303C40CD7FF767D381824CE89FAD39BD40D8DBDEBA5E712C7E75C84BE09466DB0B27BEA1__v21ea059fd&uin=869043928&fromtag=120042",
+            "error": false
+        }
+    }
+}
+```
+:::tip 注意
+需要配置好请求头的中 cookie 信息，这需要你登录自己的QQ音乐会员获取。
+cookie="uin=869043928;qm_keyst=打开控制台去qq音乐网站的cookie中复制"
+:::

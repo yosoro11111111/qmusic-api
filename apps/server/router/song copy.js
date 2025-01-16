@@ -1,8 +1,6 @@
 import Router from "@koa/router";
 import uhttp from "../http-client/uhttp.js";
-import { _guid } from "../utils/index.js";
-import { generateSignData } from "../utils/sign.js";
-import _ from "lodash"
+import {_guid} from "../utils/index.js"
 
 const router = new Router();
 
@@ -40,10 +38,9 @@ router.get("/getSongInfo", async (ctx) => {
   ctx.body = res.data;
 });
 
-// http://localhost:3001/getMusicPlay?songmid=000o3Ay7339Lf4
 // 获取歌曲链接
 router.get("/getMusicPlay", async (ctx) => {
-  const uin = "869043928";
+  const uin =  "0";
   const songmid = ctx.query.songmid + "";
   // response data only need play url value (all play)
   const justPlayUrl = (ctx.query.resType || "play") === "play";
@@ -76,10 +73,6 @@ router.get("/getMusicPlay", async (ctx) => {
   const file = songmidList.map(
     (_) => `${fileInfo.s}${_}${mediaId || _}${fileInfo.e}`
   );
-
-
-  console.log(songmidList);
-  
   const params = Object.assign({
     format: "json",
     sign: "zzannc1o6o9b4i971602f3554385022046ab796512b7012",
@@ -107,24 +100,7 @@ router.get("/getMusicPlay", async (ctx) => {
     }),
   });
   const res = await uhttp.get("/", { params });
-  const response = res.data;
-  const domain =
-    _.get(response, "req_0.data.sip", []).find(
-      (i) => !i.startsWith("http://ws")
-    ) || get(response, "req_0.data.sip[0]");
-  
-    console.log(domain);
-    
-
-  let playUrl = {};
-  _.get(response, 'req_0.data.midurlinfo', []).forEach((item) => {
-    playUrl[item.songmid] = {
-      url: item.purl ? `${domain}${item.purl}`  : '',
-      error: !item.purl && '暂无播放链接'
-    };
-  });
-  response.playUrl = playUrl;
-  ctx.body = justPlayUrl ? {playUrl} : response;
+  ctx.body = res.data;
 });
 
 export default router;
