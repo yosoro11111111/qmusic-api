@@ -1,13 +1,19 @@
 import Router from "@koa/router";
 import yhttp from "../http-client/yhttp.js";
 import uhttp from "../http-client/uhttp.js";
+import JsonResult from "../utils/json-result.js";
 
 const router = new Router();
 
 // 获取歌单分类
 router.get("/getSongListCategories", async (ctx, next) => {
   const res = await yhttp.get("/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg");
-  ctx.body = res.data;
+  
+  if (res.code === 0) {
+    ctx.body = JsonResult.sucess(res.data.categories);
+  } else {
+    ctx.body = JsonResult.error(res.message);
+  }
 });
 
 // 获取歌单列表
@@ -19,7 +25,11 @@ router.get("/getSongLists", async (ctx) => {
   const res = await yhttp.get("/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg", {
     params,
   });
-  ctx.body = res.data;
+  if (res.code === 0) {
+    ctx.body = JsonResult.sucess(res.data.list);
+  } else {
+    ctx.body = JsonResult.error(res.message);
+  }
 });
 
 // 获取歌单详情
@@ -38,7 +48,12 @@ router.get("/getSongListDetail", async (ctx) => {
   const res = await yhttp.get("/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg", {
     params,
   });
-  ctx.body = res.data;
+  if(res.code===0){
+    ctx.body = JsonResult.sucess(res.cdlist[0]);;
+  }else{
+    ctx.body = JsonResult.error('暂无数据');
+  }
+
 });
 
 export default router;

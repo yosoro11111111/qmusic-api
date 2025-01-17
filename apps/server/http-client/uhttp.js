@@ -21,4 +21,6 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
+instance.interceptors.response.use((res) => res.data);
+
 export default instance;

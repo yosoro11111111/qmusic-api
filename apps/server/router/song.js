@@ -3,6 +3,7 @@ import uhttp from "../http-client/uhttp.js";
 import { guid, fileType } from "../utils/index.js";
 import _ from "lodash";
 import config from "../project.config.js";
+import JsonResult from "../utils/json-result.js"
 
 const router = new Router();
 
@@ -34,7 +35,13 @@ router.get("/getSongInfo", async (ctx) => {
     }),
   };
   const res = await uhttp.get("/", { params });
-  ctx.body = res.data;
+  console.log(res);
+  
+   if(res.code===0){
+      ctx.body = JsonResult.sucess(res.songinfo.data);
+    }else{
+      ctx.body = JsonResult.error('暂无数据');
+    }
 });
 
 // 获取歌曲链接：如 http://localhost:3001/getMusicPlay?songmid=000o3Ay7339Lf4
@@ -73,10 +80,7 @@ router.get("/getMusicPlay", async (ctx) => {
       },
     }),
   };
-  const res = await uhttp.get("/", { params });
-  const response = res.data;
-  console.log(response);
-
+  const response = await uhttp.get("/", { params });
   const domain =
     _.get(response, "req_0.data.sip", []).find(
       (i) => !i.startsWith("http://ws")
@@ -89,8 +93,12 @@ router.get("/getMusicPlay", async (ctx) => {
       error: !item.purl && "暂无播放链接",
     };
   });
+  // 如果只有一个，直接返回url
+  if(Object.keys(playUrl).length===1){
+    playUrl = Object.values(playUrl)[0].url
+  }
   response.playUrl = playUrl;
-  ctx.body = justPlayUrl ? { playUrl } : response;
+  ctx.body = justPlayUrl ? JsonResult.sucess(playUrl) : JsonResult.sucess(response);
 });
 
 export default router;

@@ -12,8 +12,6 @@ instance.interceptors.request.use((config) => {
   config.params = { format: "json", outCharset: "utf-8", ...config.params };
   return config;
 });
-instance.interceptors.response.use((res) => {
-  return res;
-});
+instance.interceptors.response.use((res) => res.data);
 
 export default instance;

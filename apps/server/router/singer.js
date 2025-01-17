@@ -4,10 +4,11 @@ import uhttp from "../http-client/uhttp.js";
 import _ from "lodash";
 import dayjs from "dayjs";
 import xml2json from "xml2json";
+import JsonResult from "../utils/json-result.js"
 
 const router = new Router();
 
-// 获取歌曲详情
+// 获取歌手详情
 router.get("/getSingerDesc", async (ctx) => {
   const res = await yhttp.get("/splcloud/fcgi-bin/fcg_get_singer_desc.fcg", {
     params: {
@@ -16,9 +17,15 @@ router.get("/getSingerDesc", async (ctx) => {
       singermid: ctx.query.singermid,
     },
   });
-  ctx.body = xml2json.toJson(res.data);
+  const dataJson = JSON.parse(xml2json.toJson(res));
+  if(dataJson.result.code === "0"){
+    ctx.body = JsonResult.sucess(dataJson.result.data.info);
+  }else{
+    ctx.body = JsonResult.error(dataJson.result.message);
+  }
 });
 
+// 获取歌手专辑
 router.get("/getSingerAlbum", async (ctx) => {
   const singermid = ctx.query.singermid;
   const num = +ctx.query.limit || 5;
@@ -45,7 +52,12 @@ router.get("/getSingerAlbum", async (ctx) => {
   };
 
   const res = await uhttp.get("/", { params });
-  ctx.body = res.data;
+  if(res.singer.code===0){
+    ctx.body = JsonResult.sucess(res.singer.data.albumList);
+  }else{
+    ctx.body = JsonResult.error('暂无此歌手专辑');
+  }
+ 
 });
 
 export default router;
