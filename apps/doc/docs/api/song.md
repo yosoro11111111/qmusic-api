@@ -282,7 +282,9 @@ get 接口：`/getMusicPlay`
 
 ```js
 {
-  songmid: "000o3Ay7339Lf4"; //获取多个 以逗号分割
+  songmid: string, //必须，歌曲id, 多个播放链接使用逗号分隔, 如"000o3Ay7339Lf4"
+  justPlayUrl:string, // 可选参数，仅返回播放链接, 默认是 play。[all | play]
+  quality: string// 可选参数，播放品质, 默认是 128。[m4a | 128 | 320 | ape | flac]
 }
 ```
 
@@ -298,7 +300,8 @@ get 接口：`/getMusicPlay`
     }
 }
 ```
+
 :::tip 注意
-需要配置好请求头的中 cookie 信息，这需要你登录自己的QQ音乐会员获取。
-cookie="uin=869043928;qm_keyst=打开控制台去qq音乐网站的cookie中复制"
+需要配置好请求头的中 cookie 信息，这需要你登录自己的 QQ 音乐会员获取。
+在项目的 project.config.js 中配置！
 :::
