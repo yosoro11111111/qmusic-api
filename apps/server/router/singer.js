@@ -1,8 +1,7 @@
 import Router from "@koa/router";
 import yhttp from "../http-client/yhttp.js";
-import { guid, fileType } from "../utils/index.js";
+import uhttp from "../http-client/uhttp.js";
 import _ from "lodash";
-import config from "../project.config.js";
 import dayjs from "dayjs";
 import xml2json from "xml2json";
 
@@ -18,6 +17,35 @@ router.get("/getSingerDesc", async (ctx) => {
     },
   });
   ctx.body = xml2json.toJson(res.data);
+});
+
+router.get("/getSingerAlbum", async (ctx) => {
+  const singermid = ctx.query.singermid;
+  const num = +ctx.query.limit || 5;
+  const begin = +ctx.query.page || 0;
+
+  const params = {
+    singermid,
+    data: JSON.stringify({
+      comm: {
+        ct: 24,
+        cv: 0,
+      },
+      singer: {
+        method: "GetAlbumList",
+        param: {
+          sort: 5,
+          singermid,
+          begin,
+          num,
+        },
+        module: "music.musichallAlbum.AlbumListServer",
+      },
+    }),
+  };
+
+  const res = await uhttp.get("/", { params });
+  ctx.body = res.data;
 });
 
 export default router;

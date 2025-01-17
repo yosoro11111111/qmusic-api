@@ -5,6 +5,7 @@
 get 接口：`/getSingerDesc`
 
 **参数如下：**
+
 ```js
 {
   singermid: string, // 歌手id，比如"0025NhlN2yWrP4";
@@ -12,6 +13,7 @@ get 接口：`/getSingerDesc`
 ```
 
 **返回结果如下：**
+
 ```js
 {
 	"result": {
@@ -74,5 +76,97 @@ get 接口：`/getSingerDesc`
 			}
 		}
 	}
+}
+```
+
+## 专辑
+
+get 接口：`/getSingerDesc`
+
+**参数如下：**
+
+```js
+{
+  singermid: string, // 歌手id，比如"0025NhlN2yWrP4";
+}
+```
+
+**返回结果如下：**
+
+```js
+{
+    "code": 0,
+    "ts": 1737125146295,
+    "start_ts": 1737125146285,
+    "traceid": "7856532beb513511",
+    "singer": {
+        "code": 0,
+        "data": {
+            "singerMid": "0025NhlN2yWrP4",
+            "albumList": [
+                {
+                    "albumMid": "001g7BIA0IyPBZ",
+                    "albumName": "Six Degrees",
+                    "albumTranName": "",
+                    "publishDate": "2025-01-10",
+                    "totalNum": 0,
+                    "albumType": "Single",
+                    "pmid": "001g7BIA0IyPBZ_1",
+                    "albumID": 61118684,
+                    "singerName": "派伟俊/周杰伦",
+                    "tags": null
+                },
+                {
+                    "albumMid": "0039qQsU3Thnb5",
+                    "albumName": "稻香 (Remix摇滚版)",
+                    "albumTranName": "",
+                    "publishDate": "2024-07-03",
+                    "totalNum": 0,
+                    "albumType": "Single",
+                    "pmid": "0039qQsU3Thnb5_1",
+                    "albumID": 52616075,
+                    "singerName": "周杰伦",
+                    "tags": null
+                },
+                {
+                    "albumMid": "001ln9YB420a7b",
+                    "albumName": "圣诞星 (feat. 杨瑞代)",
+                    "albumTranName": "",
+                    "publishDate": "2023-12-22",
+                    "totalNum": 0,
+                    "albumType": "Single",
+                    "pmid": "001ln9YB420a7b_2",
+                    "albumID": 44806901,
+                    "singerName": "周杰伦",
+                    "tags": null
+                },
+                {
+                    "albumMid": "0042cH172YJ0mz",
+                    "albumName": "最伟大的作品",
+                    "albumTranName": "",
+                    "publishDate": "2022-07-15",
+                    "totalNum": 0,
+                    "albumType": "录音室专辑",
+                    "pmid": "0042cH172YJ0mz_3",
+                    "albumID": 28791467,
+                    "singerName": "周杰伦",
+                    "tags": null
+                },
+                {
+                    "albumMid": "0009C3rp3Kfwg0",
+                    "albumName": "Mojito",
+                    "albumTranName": "",
+                    "publishDate": "2020-06-12",
+                    "totalNum": 0,
+                    "albumType": "Single",
+                    "pmid": "0009C3rp3Kfwg0_3",
+                    "albumID": 12924001,
+                    "singerName": "周杰伦",
+                    "tags": null
+                }
+            ],
+            "total": 39
+        }
+    }
 }
 ```
