@@ -281,6 +281,7 @@ get 接口：`/getSongLists`
 ```
 
 ## 详情
+<!-- https://nicelee.top/blog/2019/05/24/get-qqmusic-4/ -->
 
 get 接口：`/getSongListDetail`
 
@@ -288,7 +289,10 @@ get 接口：`/getSongListDetail`
 
 ```js
 {
-  disstid: 7011264340;
+  disstid: 7011264340, // 歌单id
+  // （分页信息如果不填写则默认展示所有，因为数据庞大可能导致页面卡顿）
+  song_begin: 0, // 分页信息：当前第几页 
+  song_num:10, // 分页信息：每页条数
 }
 ```
 

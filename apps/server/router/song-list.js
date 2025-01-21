@@ -32,22 +32,32 @@ router.get("/getSongLists", async (ctx) => {
   }
 });
 
-// 获取歌单详情
+/**
+ * 获取歌单详情
+ * @description: 2, 3
+ * @param {page} 页数
+ * @param {limit} 每页条数[20, 60]
+ * @param {categoryId} 分类
+ * @param {sortId} 分类
+ * @return:
+ */
 router.get("/getSongListDetail", async (ctx) => {
-  console.log(1111, ctx.query);
+  console.log('开始请求');
+  
   const params = {
-    format: "json",
-    outCharset: "utf-8",
     type: 1,
     json: 1,
     utf8: 1,
     onlysong: 0,
     new_format: 1,
     ...ctx.query,
+    song_num: 10
   };
+  console.log(1111, params);
   const res = await yhttp.get("/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg", {
     params,
   });
+  console.log('处理返回');
   if(res.code===0){
     ctx.body = JsonResult.sucess(res.cdlist[0]);;
   }else{
