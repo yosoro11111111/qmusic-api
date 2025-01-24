@@ -27,10 +27,12 @@ router.get("/getTopLists", async (ctx) => {
 });
 
 router.get("/getRanks", async (ctx) => {
+
   const topid = +ctx.query.topId || 4;
-  const offset = +ctx.query.page || 0;
   const num = +ctx.query.limit || 10;
+  const offset = (+ctx.query.page || 0)*num;
   const period = ctx.query.period || dayjs().format("YYYY-MM-DD");
+  // const ein = +limit * (+page + 1) - 1;
   const data = {
     comm: {
       cv: 4747474,
@@ -48,7 +50,7 @@ router.get("/getRanks", async (ctx) => {
     req_1: {
       module: "musicToplist.ToplistInfoServer",
       method: "GetDetail",
-      param: { topid, offset, num, period },
+      param: { topid, offset, num, period}, // 通过offset，num字段的值控制请求列表数量
     },
   };
   const dataJsonStr = JSON.stringify(data);
