@@ -3,7 +3,8 @@ import uhttp from "../http-client/uhttp.js";
 import { guid, fileType } from "../utils/index.js";
 import _ from "lodash";
 import config from "../project.config.js";
-import JsonResult from "../utils/json-result.js"
+import JsonResult from "../utils/json-result.js";
+import signTool from "../utils/sign.js"
 
 const router = new Router();
 
@@ -36,12 +37,12 @@ router.get("/getSongInfo", async (ctx) => {
   };
   const res = await uhttp.get("/", { params });
   console.log(res);
-  
-   if(res.code===0){
-      ctx.body = JsonResult.sucess(res.songinfo.data);
-    }else{
-      ctx.body = JsonResult.error('暂无数据');
-    }
+
+  if (res.code === 0) {
+    ctx.body = JsonResult.sucess(res.songinfo.data);
+  } else {
+    ctx.body = JsonResult.error("暂无数据");
+  }
 });
 
 // 获取歌曲链接：如 http://localhost:3001/getMusicPlay?songmid=000o3Ay7339Lf4
@@ -55,30 +56,32 @@ router.get("/getMusicPlay", async (ctx) => {
     (songmid) => fileInfo.s + songmid + (mediaId || songmid) + fileInfo.e
   );
 
-  const params = {
-    sign: "zzannc1o6o9b4i971602f3554385022046ab796512b7012",
-    data: JSON.stringify({
-      req_0: {
-        module: "vkey.GetVkeyServer",
-        method: "CgiGetVkey",
-        param: {
-          filename: file,
-          guid,
-          songmid: songmids,
-          songtype: [0],
-          uin,
-          loginflag: 1,
-          platform: "20",
-        },
-      },
-      loginUin: uin,
-      comm: {
+  const paramsJson = {
+    req_0: {
+      module: "vkey.GetVkeyServer",
+      method: "CgiGetVkey",
+      param: {
+        filename: file,
+        guid,
+        songmid: songmids,
+        songtype: [0],
         uin,
-        format: "json",
-        ct: 24,
-        cv: 0,
+        loginflag: 1,
+        platform: "20",
       },
-    }),
+    },
+    loginUin: uin,
+    comm: {
+      uin,
+      format: "json",
+      ct: 24,
+      cv: 0,
+    },
+  };
+  const paramString = JSON.stringify(paramsJson);
+  const params = {
+    sign: signTool(paramString),
+    data: paramString,
   };
   const response = await uhttp.get("/", { params });
   const domain =
@@ -94,11 +97,13 @@ router.get("/getMusicPlay", async (ctx) => {
     };
   });
   // 如果只有一个，直接返回url
-  if(Object.keys(playUrl).length===1){
-    playUrl = Object.values(playUrl)[0].url
+  if (Object.keys(playUrl).length === 1) {
+    playUrl = Object.values(playUrl)[0].url;
   }
   response.playUrl = playUrl;
-  ctx.body = justPlayUrl ? JsonResult.sucess(playUrl) : JsonResult.sucess(response);
+  ctx.body = justPlayUrl
+    ? JsonResult.sucess(playUrl)
+    : JsonResult.sucess(response);
 });
 
 export default router;
