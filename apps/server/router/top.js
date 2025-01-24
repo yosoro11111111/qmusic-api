@@ -1,9 +1,10 @@
 import Router from "@koa/router";
 import dayjs from "dayjs";
-import isoWeeks from  'dayjs/plugin/isoWeek.js';
+import isoWeeks from "dayjs/plugin/isoWeek.js";
 import uhttp from "../http-client/uhttp.js";
 import yhttp from "../http-client/yhttp.js";
 import JsonResult from "../utils/json-result.js";
+import signTool from "../utils/sign.js";
 
 dayjs.extend(isoWeeks);
 
@@ -26,43 +27,48 @@ router.get("/getTopLists", async (ctx) => {
 });
 
 router.get("/getRanks", async (ctx) => {
-  const topId = +ctx.query.topId || 4;
-  const num = +ctx.query.limit || 20;
+  const topid = +ctx.query.topId || 4;
   const offset = +ctx.query.page || 0;
-  const date = ctx.query.period || dayjs();
-  const week = dayjs(date).isoWeek();
-  const year = dayjs(date).year();
-  const period = `${year}_${week}`;
+  const num = +ctx.query.limit || 10;
+  const period = ctx.query.period || dayjs().format("YYYY-MM-DD");
   const data = {
     comm: {
       cv: 4747474,
       ct: 24,
+      format: "json",
+      inCharset: "utf-8",
+      outCharset: "utf-8",
+      notice: 0,
+      platform: "yqq.json",
       needNewCode: 1,
       uin: 0,
+      g_tk_new_20200303: 5381,
+      g_tk: 5381,
     },
     req_1: {
       module: "musicToplist.ToplistInfoServer",
       method: "GetDetail",
-      param: {
-        topId,
-        offset,
-        num,
-        period,
-      },
+      param: { topid, offset, num, period },
     },
   };
-
-  const params = {
-    data: JSON.stringify(data),
-  };
-  const res = await uhttp.get("/", {
-    params,
+  const dataJsonStr = JSON.stringify(data);
+  const sign = signTool(dataJsonStr);
+  console.log(sign);
+  const res = await uhttp.post("/", dataJsonStr, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    params: {
+      _: new Date().getTime(),
+      sign: sign,
+    },
   });
-  if (res.code === 0) {
-    ctx.body = JsonResult.sucess(res.req_1.data.data);
-  } else {
-    ctx.body = JsonResult.error(res.message);
-  }
+  res.req_1.data.data.song.forEach(element => {
+    if(!element.cover){
+      element.cover = `https://y.qq.com/music/photo_new/T002R300x300M000${element.albumMid}.jpg?max_age=2592000`
+    }
+  });
+  ctx.body = JsonResult.sucess(res.req_1.data.data.song);
 });
 
 export default router;
