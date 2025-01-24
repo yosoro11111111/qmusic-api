@@ -65,6 +65,7 @@ router.get("/getRanks", async (ctx) => {
       sign: sign,
     },
   });
+  // res.req_1.data.songInfoList // 这个属性信息特别全，但是很多用不到
   res.req_1.data.data.song.forEach((element, index) => {
     if(!element.cover){
       element.cover = `https://y.qq.com/music/photo_new/T002R300x300M000${element.albumMid}.jpg?max_age=2592000`

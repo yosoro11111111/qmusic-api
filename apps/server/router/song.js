@@ -4,7 +4,7 @@ import { guid, fileType } from "../utils/index.js";
 import _ from "lodash";
 import config from "../project.config.js";
 import JsonResult from "../utils/json-result.js";
-import signTool from "../utils/sign.js"
+import signTool from "../utils/sign.js";
 
 const router = new Router();
 
@@ -12,6 +12,22 @@ const router = new Router();
 router.get("/getSongInfo", async (ctx) => {
   const song_mid = ctx.query.songmid;
   const song_id = ctx.query.songid || "";
+  const paramsJson = {
+    comm: {
+      ct: 24,
+      cv: 0,
+    },
+    songinfo: {
+      method: "get_song_detail_yqq",
+      param: {
+        song_type: 0,
+        song_mid,
+        song_id,
+      },
+      module: "music.pf_song_detail_svr",
+    },
+  };
+  const paramsStr = JSON.stringify(paramsJson);
   const params = {
     g_tk: 1124214810,
     loginUin: "0",
@@ -19,25 +35,10 @@ router.get("/getSongInfo", async (ctx) => {
     notice: 0,
     platform: "yqq.json",
     needNewCode: 0,
-    data: JSON.stringify({
-      comm: {
-        ct: 24,
-        cv: 0,
-      },
-      songinfo: {
-        method: "get_song_detail_yqq",
-        param: {
-          song_type: 0,
-          song_mid,
-          song_id,
-        },
-        module: "music.pf_song_detail_svr",
-      },
-    }),
+    data: paramsStr,
+    sign: signTool(paramsStr),
   };
   const res = await uhttp.get("/", { params });
-  console.log(res);
-
   if (res.code === 0) {
     ctx.body = JsonResult.sucess(res.songinfo.data);
   } else {
