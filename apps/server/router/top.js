@@ -65,12 +65,18 @@ router.get("/getRanks", async (ctx) => {
       sign: sign,
     },
   });
-  res.req_1.data.data.song.forEach(element => {
-    if(!element.cover){
-      element.cover = `https://y.qq.com/music/photo_new/T002R300x300M000${element.albumMid}.jpg?max_age=2592000`
-    }
+  // res.req_1.data.data.song.forEach(element => {
+  //   if(!element.cover){
+  //     element.cover = `https://y.qq.com/music/photo_new/T002R300x300M000${element.albumMid}.jpg?max_age=2592000`
+  //   }
+  // });
+  res.req_1.data.songInfoList.forEach(element => {
+    // if(!element.cover){
+      
+    // }
+    element.cover = `https://y.qq.com/music/photo_new/T002R300x300M000${element.album.mid}.jpg?max_age=2592000`
   });
-  ctx.body = JsonResult.sucess(res.req_1.data.data.song);
+  ctx.body = JsonResult.sucess(res.req_1.data.songInfoList);
 });
 
 export default router;
