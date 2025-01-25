@@ -6,7 +6,7 @@ const instance = axios.create({
     referer: "https://y.qq.com/",
     "content-type": "application/x-www-form-urlencoded",
     origin: "https://y.qq.com",
-    // host: "u.y.qq.com",
+    host: "u6.y.qq.com",
     cookie: `uin=${config.uin};qm_keyst=${config.qm_keyst}`,
     "content-type": "application/x-www-form-urlencoded",
   },
