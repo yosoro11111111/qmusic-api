@@ -24,5 +24,5 @@ QQ音乐API 之 koa2 版本，仅供学习不可做商业用途，有问题请�
 
 
 <div align="center">
-<img src="https://github.com/dingshaohua-com/qmusic-api/blob/main/static/qq-qr.webp" width="300"/>
+<img src="https://github.com/dingshaohua-com/qmusic-api/blob/main/static/qq-qr.webp" width="200"/>
 </div>
