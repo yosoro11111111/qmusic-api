@@ -22,3 +22,7 @@ QQ音乐API 之 koa2 版本，仅供学习不可做商业用途，有问题请�
 * 代码逻辑清晰，简单且冗余代码少
 
 
+
+<div align="center">
+![preview](https://github.com/dshvv/qmusic-api/blob/main/static/qq-qr.webp)
+</div>
