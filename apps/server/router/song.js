@@ -84,7 +84,12 @@ router.get("/getMusicPlay", async (ctx) => {
     sign: signTool(paramString),
     data: paramString,
   };
-  const response = await uhttp.get("/", { params });
+  const response = await uhttp.get("/", {
+    params,
+    headers: {
+      referer: "https://y.qq.com/portal/player.html",
+    },
+  });
   const domain =
     _.get(response, "req_0.data.sip", []).find(
       (i) => !i.startsWith("http://ws")
