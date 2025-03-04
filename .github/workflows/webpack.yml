@@ -1,4 +1,4 @@
-name: 打包和部署官网
+name: 打包和部署官
 
 on:
   push:
